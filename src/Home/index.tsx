@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
+import { Alert } from "react-native";
 import {
   Header,
   Container,
@@ -12,87 +13,144 @@ import {
   GridLine,
   MemoryText,
   InputText,
+  InputLine,
+  OperationText,
 } from "./styles";
 
 export default function Home() {
+  const [display, setDisplay] = useState("0");
+  const [memory, setMemory] = useState("0");
+  const [operation, setOperation] = useState("");
+
+  function resetDisplay() {
+    setDisplay("0");
+    setMemory("0");
+    setOperation("");
+  }
+
+  function operationClick(value: string) {
+    if (memory === "0") {
+      setOperation(value);
+      setMemory(display);
+      setDisplay("0");
+    }
+  }
+
+  function positiveNegativeClick() {
+    if (display.includes("-")) {
+      let displayValue = display.replace("-", "");
+      setDisplay(displayValue);
+    } else {
+      setDisplay("-" + display);
+    }
+  }
+
+  function equalClick() {
+    let displayNumber: number = +display;
+    let memoryNumber: number = +memory;
+    let result = displayNumber + memoryNumber;
+    // Alert.alert(result.toString());
+    setDisplay(result.toString());
+    setMemory("0");
+    setOperation("");
+  }
+
+  function numberClick(value: string) {
+    if (value === ".") {
+      if (!display.includes(".")) {
+        setDisplay(display + value);
+      }
+    } else {
+      if (display === "0") {
+        setDisplay(value);
+      } else if (display === "-0") {
+        setDisplay("-" + value);
+      } else {
+        setDisplay(display + value);
+      }
+    }
+  }
+
   return (
     <Container>
       <Header>
         <StatusBar style="auto"></StatusBar>
-        <MemoryText>123</MemoryText>
-        <InputText>456</InputText>
+        <MemoryText>{memory === "0" ? "" : memory}</MemoryText>
+        <InputLine>
+          <OperationText>{operation}</OperationText>
+          <InputText>{display}</InputText>
+        </InputLine>
       </Header>
       <Grid>
         <GridLine>
-          <ACButton>
+          <ACButton onPress={resetDisplay}>
             <ButtonLabel>AC</ButtonLabel>
           </ACButton>
-          <OperationButton>
+          <OperationButton onPress={positiveNegativeClick}>
             <ButtonLabel>+/-</ButtonLabel>
           </OperationButton>
-          <OperationButton>
+          <OperationButton onPress={() => operationClick("%")}>
             <ButtonLabel>%</ButtonLabel>
           </OperationButton>
-          <OperationButton>
+          <OperationButton onPress={() => operationClick("/")}>
             <ButtonLabel>/</ButtonLabel>
           </OperationButton>
-         
         </GridLine>
 
         <GridLine>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("7")}>
             <ButtonLabel>7</ButtonLabel>
           </NumberButton>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("8")}>
             <ButtonLabel>8</ButtonLabel>
           </NumberButton>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("9")}>
             <ButtonLabel>9</ButtonLabel>
           </NumberButton>
-          <OperationButton>
+          <OperationButton onPress={() => operationClick("X")}>
             <ButtonLabel>X</ButtonLabel>
           </OperationButton>
         </GridLine>
         <GridLine>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("4")}>
             <ButtonLabel>4</ButtonLabel>
           </NumberButton>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("5")}>
             <ButtonLabel>5</ButtonLabel>
           </NumberButton>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("6")}>
             <ButtonLabel>6</ButtonLabel>
           </NumberButton>
-          <OperationButton>
+          <OperationButton onPress={() => operationClick("-")}>
             <ButtonLabel>-</ButtonLabel>
           </OperationButton>
         </GridLine>
         <GridLine>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("1")}>
             <ButtonLabel>1</ButtonLabel>
           </NumberButton>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("2")}>
             <ButtonLabel>2</ButtonLabel>
           </NumberButton>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("3")}>
             <ButtonLabel>3</ButtonLabel>
           </NumberButton>
-          <OperationButton>
+          <OperationButton onPress={() => operationClick("+")}>
             <ButtonLabel>+</ButtonLabel>
           </OperationButton>
         </GridLine>
 
         <GridLine>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick(".")}>
             <ButtonLabel>.</ButtonLabel>
           </NumberButton>
-          <NumberButton>
+          <NumberButton onPress={() => numberClick("0")}>
             <ButtonLabel>0</ButtonLabel>
           </NumberButton>
           <NumberButton>
-            <ButtonLabel>{"<"}</ButtonLabel>
+            <ButtonLabel>{"<-"}</ButtonLabel>
           </NumberButton>
-          <EqualButton>
+          <EqualButton onPress={equalClick}>
             <ButtonLabel>=</ButtonLabel>
           </EqualButton>
         </GridLine>

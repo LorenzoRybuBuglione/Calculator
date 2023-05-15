@@ -54,7 +54,7 @@ export const ButtonLabel = styled.Text`
 export const Grid = styled.View`
   align-items: space-between;
   justify-content: space-between;
-  margin-bottom: ${RFPercentage(2)}px;
+  margin-bottom: ${RFPercentage(5)}px;
 `;
 
 export const GridLine = styled.View`
@@ -75,5 +75,19 @@ export const InputText = styled.Text`
 
 export const Header = styled.View`
   flex: 1;
+  width: 100%;
   justify-content: flex-end;
+  align-items: flex-end;
+  padding-horizontal: ${RFValue(5)}px;
+`;
+
+export const OperationText = styled.Text`
+  color: #cbe4de;
+  font-size: 48px;
+`;
+
+export const InputLine = styled.View`
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
 `;
