@@ -48,11 +48,25 @@ export default function Home() {
   function equalClick() {
     let displayNumber: number = +display;
     let memoryNumber: number = +memory;
-    let result = displayNumber + memoryNumber;
-    // Alert.alert(result.toString());
-    setDisplay(result.toString());
-    setMemory("0");
-    setOperation("");
+
+    if (operation === "") {
+    } else {
+      let result: number = 0;
+      if (operation === "+") {
+        result = displayNumber + memoryNumber;
+      } else if (operation === "-") {
+        result = displayNumber - memoryNumber;
+      } else if (operation === "X") {
+        result = displayNumber * memoryNumber;
+      } else if (operation === "/") {
+        result = memoryNumber / displayNumber;
+      }
+      // else if (operation === '%') {}
+      // Alert.alert(result.toString());
+      setDisplay(result.toString());
+      setMemory("0");
+      setOperation("");
+    }
   }
 
   function numberClick(value: string) {
@@ -89,7 +103,9 @@ export default function Home() {
           <OperationButton onPress={positiveNegativeClick}>
             <ButtonLabel>+/-</ButtonLabel>
           </OperationButton>
-          <OperationButton onPress={() => operationClick("%")}>
+          <OperationButton
+          // onPress={() => operationClick("%")}
+          >
             <ButtonLabel>%</ButtonLabel>
           </OperationButton>
           <OperationButton onPress={() => operationClick("/")}>
