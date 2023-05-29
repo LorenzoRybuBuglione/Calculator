@@ -60,9 +60,9 @@ export default function Home() {
         result = displayNumber * memoryNumber;
       } else if (operation === "/") {
         result = memoryNumber / displayNumber;
+      } else if (operation === "%") {
+        result = (memoryNumber/100) * displayNumber;
       }
-      // else if (operation === '%') {}
-      // Alert.alert(result.toString());
       setDisplay(result.toString());
       setMemory("0");
       setOperation("");
@@ -98,7 +98,6 @@ export default function Home() {
     }
     setDisplay(newDisplay);
   }
-
   return (
     <Container>
       <Header>
@@ -117,9 +116,7 @@ export default function Home() {
           <OperationButton onPress={positiveNegativeClick}>
             <ButtonLabel>+/-</ButtonLabel>
           </OperationButton>
-          <OperationButton
-          // onPress={() => operationClick("%")}
-          >
+          <OperationButton onPress={() => operationClick("%")}>
             <ButtonLabel>%</ButtonLabel>
           </OperationButton>
           <OperationButton onPress={() => operationClick("/")}>
