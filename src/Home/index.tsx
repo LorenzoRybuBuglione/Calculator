@@ -89,8 +89,12 @@ export default function Home() {
     let newDisplay = display.slice(0, -1);
     if (newDisplay === "") {
       newDisplay = "0";
-    } else if (newDisplay === '-') {
-      newDisplay = "-0";
+    } else if (newDisplay === "-") {
+      if (display === "-0") {
+        newDisplay = "0";
+      } else {
+        newDisplay = "-0";
+      }
     }
     setDisplay(newDisplay);
   }
