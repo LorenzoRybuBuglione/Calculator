@@ -85,6 +85,16 @@ export default function Home() {
     }
   }
 
+  function deleteClick() {
+    let newDisplay = display.slice(0, -1);
+    if (newDisplay === "") {
+      newDisplay = "0";
+    } else if (newDisplay === '-') {
+      newDisplay = "-0";
+    }
+    setDisplay(newDisplay);
+  }
+
   return (
     <Container>
       <Header>
@@ -163,7 +173,7 @@ export default function Home() {
           <NumberButton onPress={() => numberClick("0")}>
             <ButtonLabel>0</ButtonLabel>
           </NumberButton>
-          <NumberButton>
+          <NumberButton onPress={deleteClick}>
             <ButtonLabel>{"<-"}</ButtonLabel>
           </NumberButton>
           <EqualButton onPress={equalClick}>
